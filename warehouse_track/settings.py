@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'companies',
     "phonenumber_field",
+    "django_bootstrap5"
 ]
 
 MIDDLEWARE = [
