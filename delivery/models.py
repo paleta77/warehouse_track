@@ -2,6 +2,7 @@ from django.db import models
 from warehouse.models import PayloadArea, Dock, Aisle, Warehouse
 from companies.models import Company
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
@@ -9,6 +10,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Truck(models.Model):
     registration_plates = models.CharField(max_length=15)
     brand = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return f"{self.registration_plates} - {self.brand}"
 
 class Driver(models.Model):
     first_name = models.CharField(max_length=255)
@@ -16,12 +20,18 @@ class Driver(models.Model):
     telephone = PhoneNumberField()
     email = models.EmailField(max_length=255)
     trucks = models.ManyToManyField(Truck)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
     
 class Customer(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    tax_number = models.CharField(max_length=255)
     telephone = PhoneNumberField()
     email = models.EmailField(max_length=255)
+    
+    def __str__(self):
+        return f"{self.name}"
     
 class Worker(models.Model):
     first_name = models.CharField(max_length=255)
@@ -29,8 +39,17 @@ class Worker(models.Model):
     telephone = PhoneNumberField()
     email = models.EmailField(max_length=255)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    work_start = models.TimeField()
-    work_end = models.TimeField()
+    work_start_hour = models.PositiveIntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(24)],
+        default=8
+    )
+    work_end_hour = models.PositiveIntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(24)],
+        default=16
+    )
+    
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.company}"
     
 DELIVERY_TYPES = {
     "IN": "In",
@@ -47,6 +66,9 @@ class Delivery(models.Model):
     truck = models.ForeignKey(Truck, on_delete=models.SET_NULL, null=True)
     dock = models.ForeignKey(Dock, on_delete=models.SET_NULL, null=True)
     aisle = models.ForeignKey(Aisle, on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return f"{self.delivery_number} - {self.customer}"
 
 STATUSES = {
     "in_warehouse": "In a warehouse",
