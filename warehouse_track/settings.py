@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'warehouse',
     'companies',
-    "phonenumber_field",
-    "django_bootstrap5"
+    'delivery',
+    'phonenumber_field',
+    'django_bootstrap5'
 ]
 
 MIDDLEWARE = [
