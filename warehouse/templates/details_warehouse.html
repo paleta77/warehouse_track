@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Warehouse Details
+{% endblock title %}
+
+{% block content %}
+<h1>{{ warehouse.company }} - {{ warehouse.city }}</h1>
+
+<p>Details of the warehouse.</p>
+
+<p>Company: {{ warehouse.company }}</p>
+<p>City: {{ warehouse.city }}</p>
+<p>Street: {{ warehouse.street }} {{ warehouse.building_number }}</p>
+<p>Country: {{ warehouse.country }}</p>
+<p>Email: {{ warehouse.email }}</p>
+
+<a type="button" class="btn btn-primary" href="/warehouses">back</a>
+
+{% endblock content %}

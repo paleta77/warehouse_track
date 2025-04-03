@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Warehouses
+{% endblock title %}
+
+{% block content %}
+    <h1>Warehouses</h1>
+    <p>List of all warehouses.</p>
+    {% for warehouse in warehouses %}
+        <a href="{{warehouse.id}}/">{{ warehouse.company }} - {{ warehouse.city }}<br></a>
+    {% endfor %}
+{% endblock content %}
