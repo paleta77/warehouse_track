@@ -25,4 +25,5 @@ urlpatterns = [
     path('operators/', include("django.contrib.auth.urls")),
     path('dashboard/', TemplateView.as_view(template_name="dashboard.html"), name="dashboard"),
     path('', include("warehouse.urls")),
+    path('', include("companies.urls")),
 ]
