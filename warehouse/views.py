@@ -14,6 +14,7 @@ def warehouses(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required(login_url="/")
 def warehouse_detail(request, warehouse_id):
     warehouse = Warehouse.objects.get(id=warehouse_id)
     template = loader.get_template("details_warehouse.html")
