@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Companies{% endblock title %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Company name</th>
+                <th scope="col">Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in companies %}
+                <tr>
+                    <td>{{ forloop.counter }}</th>
+                    <td><a href="{{company.id}}/">{{ company.name }}</a></td>
+                    <td>{{ company.address }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% comment %} {% for company in companies %}
+        <a href="{{company.id}}/">{{ company.name }} - {{ company.city }}<br></a>
+    {% endfor %} {% endcomment %}
+{% endblock content %}
