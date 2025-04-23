@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}
+    Aisle nr {{ aisle.number }}
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Payload areas of aisle nr {{ aisle.number }}</h2>
+    <p>Warehouse: {{ aisle.warehouse.company }} - {{ aisle.warehouse.city }} {{ aisle.warehouse.street }}</p>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Number</th>
+                <th scope="col">Payload type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payload_area in payload_areas %}
+            <tr>
+                <td>{{ payload_area.number }}</td>
+                <td>{{ payload_area.payload_type }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary mt-3" href="{% url 'aisles_of_warehouse' aisle.warehouse.id %}">Back to Aisles</a>
+    <a class="btn btn-primary mt-3" href="{% url 'warehouses' %}">Back to Warehouses</a>
+</div>
+{% endblock content %}

@@ -14,4 +14,9 @@ urlpatterns = [
         views.aisles_of_warehouse,
         name="aisles_of_warehouse",
     ),
+    path(
+        "aisles/<int:aisle_id>/payload_areas/",
+        views.payload_areas_of_aisle,
+        name="payload_areas_of_aisle",
+    ),
 ]

@@ -27,11 +27,10 @@
                 <td>{{ warehouse.building_number }}</td>
                 <td>{{ warehouse.country }}</td>
                 <td><a href="mailto:{{ warehouse.email }}">{{ warehouse.email }}</a></td>
-                <td>
-                    <a class="btn btn-link" href="{% url 'aisles_of_warehouse' warehouse.id %}">
-                        {{ aisles_count }} Aisles
-                    </a>
+                <td onclick="window.location.href='{% url 'aisles_of_warehouse' warehouse.id %}'" style="cursor: pointer">
+                    {{ aisles_count }}
                 </td>
+
             </tr>
         </tbody>
     </table>

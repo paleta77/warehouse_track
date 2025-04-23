@@ -16,7 +16,7 @@
         </thead>
         <tbody>
             {% for aisle in aisles %}
-            <tr>
+            <tr onclick="window.location.href='{% url 'payload_areas_of_aisle' aisle.id %}'" style="cursor: pointer;">
                 <td>{{ aisle.number }}</td>
                 <td>{{ aisle.length }}</td>
             </tr>
