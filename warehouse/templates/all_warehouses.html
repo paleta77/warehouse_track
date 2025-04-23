@@ -18,14 +18,12 @@
         </thead>
         <tbody>
             {% for warehouse in warehouses %}
-            <tr>
+            <tr onclick="window.location.href='{{ warehouse.id }}/'" style="cursor: pointer;">
                 <td>{{ forloop.counter }}</td>
-                <td><a href="{{ warehouse.id }}/">{{ warehouse.company }}</a></td>
+                <td>{{ warehouse.company }}</td>
                 <td>{{ warehouse.city }}</td>
-                <td>
-                    <a href="{% url 'aisles_of_warehouse' warehouse.id %}">
-                        {{ warehouse.aisles_count }}
-                    </a>
+                <td onclick="event.stopPropagation(); window.location.href='{% url 'aisles_of_warehouse' warehouse.id %}'" style="cursor: pointer">
+                    {{ warehouse.aisles_count }}
                 </td>
             </tr>
             {% endfor %}
