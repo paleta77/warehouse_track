@@ -5,27 +5,31 @@
 {% endblock title %}
 
 {% block content %}
-    <table class="table">
-        <thead>
+<div class="container mt-4">
+    <h2 class="mb-4">Warehouses</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Warehouse name</th>
+                <th scope="col">Warehouse Name</th>
                 <th scope="col">City</th>
                 <th scope="col">Aisles</th>
             </tr>
         </thead>
         <tbody>
             {% for warehouse in warehouses %}
-                <tr>
-                    <td>{{ forloop.counter }}</th>
-                    <td><a href="{{warehouse.id}}/">{{ warehouse.company }}</a></td>
-                    <td>{{ warehouse.city }}</td>
-                    <td>
-                        <a href="{% url 'aisles_of_warehouse' warehouse.id %}">
-                            {{ warehouse.aisles_count }}
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{{ warehouse.id }}/">{{ warehouse.company }}</a></td>
+                <td>{{ warehouse.city }}</td>
+                <td>
+                    <a href="{% url 'aisles_of_warehouse' warehouse.id %}">
+                        {{ warehouse.aisles_count }}
+                    </a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
+    </table>
+</div>
 {% endblock content %}

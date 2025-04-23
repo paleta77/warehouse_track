@@ -5,23 +5,25 @@
 {% endblock title %}
 
 {% block content %}
-<h2>Aisles of {{ warehouse.company }} - {{ warehouse.city }} {{ warehouse.street }}</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Number</th>
-            <th scope="col">Length</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for aisle in aisles %}
-        <tr>
-            <td>{{ aisle.number }}</td>
-            <td>{{ aisle.length }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <h2 class="mb-4">Aisles of {{ warehouse.company }} - {{ warehouse.city }} {{ warehouse.street }}</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Number</th>
+                <th scope="col">Length</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aisle in aisles %}
+            <tr>
+                <td>{{ aisle.number }}</td>
+                <td>{{ aisle.length }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<a class="btn btn-primary" href="{% url 'warehouses' %}">Back to Warehouses</a>
+    <a class="btn btn-primary mt-3" href="{% url 'warehouses' %}">Back to Warehouses</a>
+</div>
 {% endblock content %}
