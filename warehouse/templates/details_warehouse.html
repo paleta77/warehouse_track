@@ -5,16 +5,34 @@
 {% endblock title %}
 
 {% block content %}
-<h1>{{ warehouse.company }} - {{ warehouse.city }}</h1>
-
-<p>Details of the warehouse.</p>
-
-<p>Company: {{ warehouse.company }}</p>
-<p>City: {{ warehouse.city }}</p>
-<p>Street: {{ warehouse.street }} {{ warehouse.building_number }}</p>
-<p>Country: {{ warehouse.country }}</p>
-<p>Email: {{ warehouse.email }}</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Company name</th>
+            <th scope="col">City</th>
+            <th scope="col">Street</th>
+            <th scope="col">Building number</th>
+            <th scope="col">Country</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Aisles</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ warehouse.company }}</td>
+            <td>{{ warehouse.city }}</td>
+            <td>{{ warehouse.street }}</td>
+            <td>{{ warehouse.building_number }}</td>
+            <td>{{ warehouse.country }}</td>
+            <td>{{ warehouse.email }}</td>
+            <td>
+                <a href="{% url 'aisles_of_warehouse' warehouse.id %}">
+                    {{ aisles_count }}
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <a type="button" class="btn btn-primary" href="/warehouses">back</a>
-
 {% endblock content %}

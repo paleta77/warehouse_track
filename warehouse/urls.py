@@ -9,4 +9,9 @@ urlpatterns = [
         views.warehouse_detail,
         name="warehouse_detail",
     ),
+    path(
+        "warehouses/<int:warehouse_id>/aisles/",
+        views.aisles_of_warehouse,
+        name="aisles_of_warehouse",
+    ),
 ]

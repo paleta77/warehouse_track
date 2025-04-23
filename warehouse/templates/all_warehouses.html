@@ -5,9 +5,27 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>Warehouses</h1>
-    <p>List of all warehouses.</p>
-    {% for warehouse in warehouses %}
-        <a href="{{warehouse.id}}/">{{ warehouse.company }} - {{ warehouse.city }}<br></a>
-    {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Warehouse name</th>
+                <th scope="col">City</th>
+                <th scope="col">Aisles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for warehouse in warehouses %}
+                <tr>
+                    <td>{{ forloop.counter }}</th>
+                    <td><a href="{{warehouse.id}}/">{{ warehouse.company }}</a></td>
+                    <td>{{ warehouse.city }}</td>
+                    <td>
+                        <a href="{% url 'aisles_of_warehouse' warehouse.id %}">
+                            {{ warehouse.aisles_count }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
 {% endblock content %}
