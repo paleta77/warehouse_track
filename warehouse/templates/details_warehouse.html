@@ -5,16 +5,37 @@
 {% endblock title %}
 
 {% block content %}
-<h1>{{ warehouse.company }} - {{ warehouse.city }}</h1>
+<div class="container mt-4">
+    <h2 class="mb-4">Warehouse Details</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Company Name</th>
+                <th scope="col">City</th>
+                <th scope="col">Street</th>
+                <th scope="col">Building Number</th>
+                <th scope="col">Country</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Aisles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ warehouse.company }}</td>
+                <td>{{ warehouse.city }}</td>
+                <td>{{ warehouse.street }}</td>
+                <td>{{ warehouse.building_number }}</td>
+                <td>{{ warehouse.country }}</td>
+                <td><a href="mailto:{{ warehouse.email }}">{{ warehouse.email }}</a></td>
+                <td>
+                    <a class="btn btn-link" href="{% url 'aisles_of_warehouse' warehouse.id %}">
+                        {{ aisles_count }} Aisles
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<p>Details of the warehouse.</p>
-
-<p>Company: {{ warehouse.company }}</p>
-<p>City: {{ warehouse.city }}</p>
-<p>Street: {{ warehouse.street }} {{ warehouse.building_number }}</p>
-<p>Country: {{ warehouse.country }}</p>
-<p>Email: {{ warehouse.email }}</p>
-
-<a type="button" class="btn btn-primary" href="/warehouses">back</a>
-
+    <a class="btn btn-primary mt-3" href="{% url 'warehouses' %}">Back to Warehouses</a>
+</div>
 {% endblock content %}
