@@ -3,6 +3,18 @@
     Aisle nr {{ aisle.number }}
 {% endblock title %}
 
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/warehouses">Warehouses</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'warehouse_detail' aisle.warehouse.id %}">{{ aisle.warehouse.company }} - {{ aisle.warehouse.city }} {{ aisle.warehouse.street }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'aisles_of_warehouse' aisle.warehouse.id %}">Aisles</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Aisle nr {{ aisle.number }}</li>
+    </ol>
+</nav>
+{% endblock breadcrumbs %}
+
 {% block content %}
 <div class="container mt-4">
     <h2 class="mb-4">Payload areas of aisle nr {{ aisle.number }}</h2>

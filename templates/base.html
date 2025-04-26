@@ -8,31 +8,46 @@
         {% bootstrap_javascript %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm border-bottom">
-            <div class="container-fluid">
-                <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/dashboard">WarehouseTrack</a>
-                    {% if user.is_authenticated %}
-                        <li class="nav-item border-start">
-                            <a class="nav-link" href="/warehouses">Warehouses</a>
-                        </li>
-                        <li class="nav-item border-start">
-                            <a class="nav-link" href="/companies">Companies</a>
-                        </li>
-                        <li class="nav-item border-start">
-                            <form action="{% url 'logout' %}" method="post" class="ms-3">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-outline-primary">Log Out</button>
-                            </form>
-                        </li>
-                    {% endif %} 
-                </ul>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom">
+            <div class="container">
+                <a class="navbar-brand" href="/dashboard">WarehouseTrack</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/warehouses">Warehouses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/companies">Companies</a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-light">Log Out</button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </nav>
-        <main>
+        <div class="container mt-2">
+            {% block breadcrumbs %}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/dashboard">Dashboard</a>
+                    </li>
+                </ol>
+            </nav>
+            {% endblock breadcrumbs %}
+        </div>
+        <div class="container mt-4">
             {% block content %}
             {% endblock content %}
-        </main>
+        </div>
     </body>
 </html>
