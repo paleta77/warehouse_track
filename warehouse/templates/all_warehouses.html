@@ -14,7 +14,7 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-<div class="container mt-4">
+<div>
     <h2 class="mb-4">Warehouses</h2>
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
@@ -23,6 +23,7 @@
                 <th scope="col">Warehouse Name</th>
                 <th scope="col">City</th>
                 <th scope="col">Aisles</th>
+                <th scope="col">Docks</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,9 @@
                 <td>{{ warehouse.city }}</td>
                 <td onclick="event.stopPropagation(); window.location.href='{% url 'aisles_of_warehouse' warehouse.id %}'" style="cursor: pointer">
                     {{ warehouse.aisles_count }}
+                </td>
+                <td onclick="event.stopPropagation(); window.location.href='{% url 'docks_of_warehouse' warehouse.id %}'" style="cursor: pointer">
+                    {{ warehouse.docks_count }}
                 </td>
             </tr>
             {% endfor %}

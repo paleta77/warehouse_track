@@ -1,4 +1,4 @@
-from .models import Warehouse, Aisle, PayloadArea
+from .models import Warehouse, Aisle, PayloadArea, Dock
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 from django.http import HttpResponse
@@ -8,7 +8,9 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="/")
 def warehouses(request):
-    warehouses = Warehouse.objects.annotate(aisles_count=Count("aisle"))
+    warehouses = Warehouse.objects.annotate(
+        aisles_count=Count("aisle"), docks_count=Count("dock")
+    )
     template = loader.get_template("all_warehouses.html")
     context = {
         "warehouses": warehouses,
@@ -37,6 +39,7 @@ def aisles_of_warehouse(request, warehouse_id):
     )
 
 
+@login_required(login_url="/")
 def payload_areas_of_aisle(request, aisle_id):
     aisle = get_object_or_404(Aisle, id=aisle_id)
     payload_areas = PayloadArea.objects.filter(aisle=aisle)
@@ -45,3 +48,10 @@ def payload_areas_of_aisle(request, aisle_id):
         "all_payload_areas.html",
         {"aisle": aisle, "payload_areas": payload_areas},
     )
+
+
+@login_required(login_url="/")
+def docks_of_warehouse(request, warehouse_id):
+    warehouse = get_object_or_404(Warehouse, id=warehouse_id)
+    docks = Dock.objects.filter(warehouse=warehouse)
+    return render(request, "all_docks.html", {"warehouse": warehouse, "docks": docks})
