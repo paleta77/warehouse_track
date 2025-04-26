@@ -4,6 +4,16 @@
     Warehouse Details
 {% endblock title %}
 
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/warehouses">Warehouses</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Warehouse Details</li>
+    </ol>
+</nav>
+{% endblock breadcrumbs %}
+
 {% block content %}
 <div class="container mt-4">
     <h2 class="mb-4">Warehouse Details</h2>
