@@ -66,6 +66,7 @@ class Delivery(models.Model):
     truck = models.ForeignKey(Truck, on_delete=models.SET_NULL, null=True)
     dock = models.ForeignKey(Dock, on_delete=models.SET_NULL, null=True)
     aisle = models.ForeignKey(Aisle, on_delete=models.SET_NULL, null=True)
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return f"{self.delivery_number} - {self.customer}"
@@ -85,8 +86,8 @@ class Package(models.Model):
         choices=STATUSES, 
         default="unknown"
     )
-    truck = models.ForeignKey(Truck, on_delete=models.SET_NULL, null=True)
-    payload_area = models.ForeignKey(PayloadArea, on_delete=models.SET_NULL, null=True)
+    truck = models.ForeignKey(Truck, on_delete=models.SET_NULL, null=True, blank=True)
+    payload_area = models.ForeignKey(PayloadArea, on_delete=models.SET_NULL, null=True, blank=True)
     
     def validate_placement(self):
         if self.truck and self.payload_area:

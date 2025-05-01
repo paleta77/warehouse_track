@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}
+    All Deliveries
+{% endblock title %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/deliveries">Deliveries</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ delivery.delivery_number }}</li>
+    </ol>
+</nav>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div>
+    <h2 class="mb-4">Delivery Details</h2>
+    <p>Delivery Number: {{ delivery.delivery_number }}</p>
+    <p>Company: {{ delivery.customer }}</p>
+    <p>Warehouse: {{ delivery.warehouse.company }} - {{ delivery.warehouse.city }} {{ delivery.warehouse.street }}</p>
+    <p>Truck Number: {{ truck.registration_plates }}</p>
+    <p>Driver Name: {{ delivery.driver.first_name }} {{ delivery.driver.last_name }}</p>
+    <p>Driver Telephone: {{ delivery.driver.telephone }}</p>
+    <p>Driver E-mail: {{ delivery.driver.email }}</p>
+
+    <h3 class="mt-4">Packages</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Serial number</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Size</th>
+                <th scope="col">Truck</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for package in packages %}
+            <tr>
+                <td>{{ package.serial_number }}</td>
+                <td>{{ package.weight }}</td>
+                <td>{{ package.size }}</td>
+                <td>{{ package.truck }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary mt-3" href="{% url 'deliveries' %}">Back to Deliveries</a>
+    <a class="btn btn-primary mt-3" href="{% url 'warehouse_detail' delivery.warehouse.id %}">Back to Warehouse</a>
+</din>
+{% endblock content %}
