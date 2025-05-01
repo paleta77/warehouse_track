@@ -39,6 +39,7 @@ class Worker(models.Model):
     telephone = PhoneNumberField()
     email = models.EmailField(max_length=255)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     work_start_hour = models.PositiveIntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(24)],
         default=8
@@ -55,8 +56,21 @@ DELIVERY_TYPES = {
     "IN": "In",
     "OUT": "Out"
 }
+DELIVERY_STATUSES = {
+    "at_dock": "At dock",
+    "in_preparation": "In preparation",
+    "ready_to_ship": "Ready to ship",
+    "on_the_way": "On the way",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled"
+}
 
 class Delivery(models.Model):
+    status = models.CharField(
+        max_length=255, 
+        choices=DELIVERY_STATUSES, 
+        default="in_preparation"
+    )
     delivery_number = models.CharField(max_length=255)
     delivery_type = models.CharField(max_length=255, choices=DELIVERY_TYPES)
     date = models.DateField()

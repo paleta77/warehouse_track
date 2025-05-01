@@ -4,33 +4,81 @@
 {% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        Welcome {{ user.username }}
-        # table with upcomming deliveries
-        <h2>Upcoming Deliveries</h2>
+<h2>Upcoming Deliveries</h2>
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Delivery Number</th>
+            <th scope="col">Warehouse</th>
+            <th scope="col">Date</th>
+            <th scope="col">Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for delivery in deliveries_upcoming %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td onclick="window.location.href='/deliveries/{{ delivery.id }}/'"style="cursor: pointer;">{{ delivery.delivery_number }}</td>
+                <td onclick="window.location.href='/warehouses/{{ delivery.warehouse.id }}/'"style="cursor: pointer;">{{ delivery.warehouse.company }} - {{ delivery.warehouse.city }} {{ delivery.warehouse.street }}</td>
+                <td>{{ delivery.date }}</td>
+                <td>{{ delivery.delivery_type }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Currently at Work</h2>
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Delivery Number</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Warehouse</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Type</th>
+                    <th scope="col">Telephone</th>
                 </tr>
             </thead>
             <tbody>
-                {% for delivery in deliveries %}
-                    <tr onclick="window.location.href='{{ delivery.id }}/'" style="cursor: pointer;">
+                {% for worker in workers %}
+                    <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ delivery.delivery_number }}</td>
-                        <td>{{ delivery.warehouse.company }} - {{ delivery.warehouse.city }} {{ delivery.warehouse.street }}</td>
-                        <td>{{ delivery.date }}</td>
-                        <td>{{ delivery.delivery_type }}</td>
+                        <td>{{ worker.first_name }} {{ worker.last_name }}</td>
+                        <td onclick="window.location.href='{% url 'warehouse_detail' worker.warehouse.id %}'" style="cursor: pointer;">
+                            {{ worker.warehouse.company }} - {{ worker.warehouse.city }} {{ worker.warehouse.street }}
+                        </td>
+                        <td>{{ worker.telephone }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
-    {% else %}
-        <p>You are not logged in</p>
-        <a href="{% url 'login' %}">Log in</a>
-    {% endif %}
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h2>Currently at Docks</h2>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Warehouse</th>
+                    <th scope="col">Dock</th>
+                    <th scope="col">Delivery Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for delivery in deliveries_at_dock %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td onclick="window.location.href='{% url 'warehouse_detail' delivery.warehouse.id %}'" style="cursor: pointer;">
+                            {{ delivery.warehouse.company }} - {{ delivery.warehouse.city }} {{ delivery.warehouse.street }}
+                        </td>
+                        <td>{{ delivery.dock.number }}</td>
+                        <td onclick="window.location.href='{% url 'delivery_detail' delivery.id %}'" style="cursor: pointer;">
+                            {{ delivery.delivery_number }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> 
+</div>
 {% endblock %}

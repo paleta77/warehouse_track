@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Delivery, Truck, Driver, Customer, Worker, Package
 
 class DeliveryAdmin(admin.ModelAdmin):
-    list_display = ("delivery_number", "delivery_type", "date", "warehouse", "customer")
+    list_display = ("delivery_number", "delivery_type", "date", "warehouse", "customer", "status")
     
 class TruckAdmin(admin.ModelAdmin):
     list_display = ("registration_plates", "brand")
