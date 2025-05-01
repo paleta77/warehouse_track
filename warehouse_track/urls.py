@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
-from django.views.generic.base import TemplateView
+from . import views
 
 urlpatterns = [
     path(
@@ -30,7 +30,7 @@ urlpatterns = [
     path("operators/", include("django.contrib.auth.urls")),
     path(
         "dashboard/",
-        TemplateView.as_view(template_name="dashboard.html"),
+        views.dashboard,
         name="dashboard",
     ),
     path("", include("warehouse.urls")),
