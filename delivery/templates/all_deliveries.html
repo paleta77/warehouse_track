@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}
+    All Deliveries
+{% endblock title %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active"><a href="/deliveries">Deliveries</a></li>
+    </ol>
+</nav> 
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <div>
+        <h2 class="mb-4">Deliveries</h2>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Delivery number</th>
+                    <th scope="col">Warehouse</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for delivery in deliveries %}
+                    <tr onclick="window.location.href='{{ delivery.id }}/'" style="cursor: pointer;">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ delivery.delivery_number }}</td>
+                        <td>{{ delivery.warehouse.company }} - {{ delivery.warehouse.city }} {{ delivery.warehouse.street }}</td>
+                        <td>{{ delivery.date }}</td>
+                        <td>{{ delivery.delivery_type }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

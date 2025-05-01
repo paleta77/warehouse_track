@@ -35,4 +35,5 @@ urlpatterns = [
     ),
     path("", include("warehouse.urls")),
     path("", include("companies.urls")),
+    path("", include("delivery.urls")),
 ]
