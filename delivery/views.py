@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
-from .models import Delivery, Truck, Package, Driver
+from .models import Delivery, Truck, Package, Driver, Package
 from django.shortcuts import get_object_or_404
 
 @login_required(login_url="/")
@@ -25,5 +25,14 @@ def delivery_detail(request, delivery_id):
         "truck": truck,
         "packages": packages,
         "driver": driver,
+    }
+    return HttpResponse(template.render(context, request))
+
+@login_required(login_url="/")
+def package_detail(request, package_id):
+    package = get_object_or_404(Package, id=package_id)
+    template = loader.get_template("details_package.html")
+    context = {
+        "package": package,
     }
     return HttpResponse(template.render(context, request))
