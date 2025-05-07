@@ -37,7 +37,7 @@
         <tbody>
             {% for package in packages %}
             <tr>
-                <td>{{ package.serial_number }}</td>
+                <td onclick="window.location.href='/packages/{{package.id}}'"  >{{ package.serial_number }}</td>
                 <td>{{ package.weight }}</td>
                 <td>{{ package.size }}</td>
                 <td>{{ package.truck }}</td>

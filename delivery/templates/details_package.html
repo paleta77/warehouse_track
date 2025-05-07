@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Package Details
+{% endblock title %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/deliveries">Deliveries</a></li>
+        <li class="breadcrumb-item"><a href="/deliveries/{{ package.delivery.id }}/">Delivery {{ package.delivery.id }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Package Details</li>
+    </ol>
+</nav>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div>
+    <h2 class="mb-4">Package Details</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p class="card-text"><strong>Package ID:</strong> {{ package.id }}</p>
+            <p class="card-text"><strong>Delivery ID:</strong> {{ package.serial_number }}</p>
+            <p class="card-text"><strong>Weight:</strong> {{ package.weight }} kg</p>
+            <p class="card-text"><strong>Dimensions:</strong> {{ package.dimensions }} cm</p>
+            <p class="card-text"><strong>Status:</strong> {{ package.status }}</p>
+        </div>
+    </div>    
+    <button class="btn btn-primary" onclick="history.back()">Go Back</button>
+</div>
+{% endblock content %}
