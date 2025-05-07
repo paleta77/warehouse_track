@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add delivery
+{% endblock title %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/deliveries">Deliveries</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add delivery</li>
+    </ol>
+</nav>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add delivery</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+{% endblock content %}

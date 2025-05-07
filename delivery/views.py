@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 from .models import Delivery, Truck, Package, Driver, Package
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
+from .forms import DeliveryForm
 
 @login_required(login_url="/")
 def deliveries(request):
@@ -36,3 +37,13 @@ def package_detail(request, package_id):
         "package": package,
     }
     return HttpResponse(template.render(context, request))
+
+def create_delivery(request):
+    if request.method == "POST":
+        form = DeliveryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("deliveries")
+    else:
+        form = DeliveryForm()
+    return render(request, "add_delivery.html", {"form": form})
