@@ -73,7 +73,7 @@ class Delivery(models.Model):
     )
     delivery_number = models.CharField(max_length=255)
     delivery_type = models.CharField(max_length=255, choices=DELIVERY_TYPES)
-    date = models.DateField()
+    date = models.DateTimeField()
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     workers = models.ManyToManyField(Worker)

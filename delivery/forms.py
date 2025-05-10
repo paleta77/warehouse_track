@@ -1,5 +1,5 @@
 from django import forms
-from .models import Delivery
+from .models import Delivery, Worker
 
 class DeliveryForm(forms.ModelForm):
     class Meta:
@@ -18,6 +18,12 @@ class DeliveryForm(forms.ModelForm):
             "driver",
         ]
         widgets = {
-            "date": forms.DateInput(attrs={"type": "date"}),
+            "date": forms.TextInput(attrs={"id": "id_date"}),  # plain text input for Flatpickr
             "workers": forms.CheckboxSelectMultiple(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # empty until the date is selected
+        self.fields["workers"].queryset = Worker.objects.none()
