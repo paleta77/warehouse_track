@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.template import loader
-from .models import Delivery, Truck, Package, Driver, Package, Worker
+from .models import Delivery, Truck, Driver, Package, Worker, Customer
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import DeliveryForm
 from datetime import datetime
@@ -66,3 +66,15 @@ def get_available_workers(request):
         except ValueError:
             return JsonResponse({"workers": []})
     return JsonResponse({"workers": []})
+
+def get_best_dock(request):
+    warehouse_id = request.GET.get("warehouse")
+    package_ids = request.GET.getlist("packages[]")
+
+    if warehouse_id and package_ids:
+        customer = Customer.objects.first()  # Use any valid customer
+        temp_delivery = Delivery(warehouse_id=warehouse_id, customer=customer)
+        packages_qs = Package.objects.filter(pk__in=package_ids)
+        best_dock = temp_delivery.select_best_dock(packages=packages_qs)
+        return JsonResponse({"dock": best_dock.pk if best_dock else None})
+    return JsonResponse({"dock": None})

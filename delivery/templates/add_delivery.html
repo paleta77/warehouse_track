@@ -71,5 +71,33 @@
             }
         });
     });
+
+    function updateDockField() {
+        const warehouse = document.querySelector("#id_warehouse").value;
+        // Select all checked package checkboxes
+        const packageCheckboxes = document.querySelectorAll("input[name='packages']:checked");
+        const packages = Array.from(packageCheckboxes).map(cb => cb.value);
+
+        if (!warehouse || packages.length === 0) {
+            return;
+        }
+
+        fetch(`/get-best-dock/?warehouse=${warehouse}&${packages.map(p => "packages[]=" + p).join("&")}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.dock) {
+                    document.querySelector("#id_dock").value = data.dock;
+                }
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("#id_warehouse").addEventListener("change", updateDockField);
+
+        // Attach to all package checkboxes
+        document.querySelectorAll("input[name='packages']").forEach(function(checkbox) {
+            checkbox.addEventListener("change", updateDockField);
+        });
+    });
 </script>
 {% endblock content %}
