@@ -67,6 +67,11 @@ DELIVERY_STATUSES = {
 }
 
 class Delivery(models.Model):
+    
+    class Meta:
+        verbose_name = 'Delivery'
+        verbose_name_plural = 'Deliveries'
+    
     status = models.CharField(
         max_length=255, 
         choices=DELIVERY_STATUSES, 
