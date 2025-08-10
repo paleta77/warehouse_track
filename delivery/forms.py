@@ -1,5 +1,6 @@
 from django import forms
-from .models import Delivery, Worker, Package
+from .models import Delivery, Worker, Package, Customer
+from datetime import datetime
 
 class DeliveryForm(forms.ModelForm):
     class Meta:
@@ -39,13 +40,25 @@ class DeliveryForm(forms.ModelForm):
             packages = self.initial.get("packages")
 
         if warehouse and packages:
-            temp_delivery = Delivery(warehouse_id=warehouse)
-            
-            temp_delivery._prefetched_objects_cache = {}
-            temp_delivery.packages = Package.objects.filter(pk__in=packages)
-            best_dock = temp_delivery.select_best_dock()
+            customer = self.data.get("customer")
+            warehouse = int(warehouse)
+            temp_delivery = Delivery(warehouse_id=warehouse, customer_id=customer)
+            packages_qs = Package.objects.filter(pk__in=packages)
+            best_dock = temp_delivery.select_best_dock(packages=packages_qs)
             if best_dock:
                 self.fields["dock"].initial = best_dock.pk
 
-        # empty until the date is selected
-        self.fields["workers"].queryset = Worker.objects.none()
+        # Set workers queryset based on submitted date
+        date_str = self.data.get("date") or self.initial.get("date")
+        if date_str:
+            try:
+                selected_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+                current_hour = selected_datetime.hour
+                self.fields["workers"].queryset = Worker.objects.filter(
+                    work_start_hour__lte=current_hour,
+                    work_end_hour__gt=current_hour
+                )
+            except Exception:
+                self.fields["workers"].queryset = Worker.objects.none()
+        else:
+            self.fields["workers"].queryset = Worker.objects.none()

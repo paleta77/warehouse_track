@@ -43,8 +43,12 @@ def create_delivery(request):
     if request.method == "POST":
         form = DeliveryForm(request.POST)
         if form.is_valid():
-            form.save()
+            delivery = form.save(commit=False)
+            delivery.save()
+            form.save_m2m()  
             return redirect("deliveries")
+        else:
+            print(form.errors)
     else:
         form = DeliveryForm()
     return render(request, "add_delivery.html", {"form": form})
@@ -72,7 +76,7 @@ def get_best_dock(request):
     package_ids = request.GET.getlist("packages[]")
 
     if warehouse_id and package_ids:
-        customer = Customer.objects.first()  # Use any valid customer
+        customer = Customer.objects.first() 
         temp_delivery = Delivery(warehouse_id=warehouse_id, customer=customer)
         packages_qs = Package.objects.filter(pk__in=package_ids)
         best_dock = temp_delivery.select_best_dock(packages=packages_qs)
