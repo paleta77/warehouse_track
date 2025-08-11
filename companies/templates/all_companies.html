@@ -12,25 +12,25 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Company name</th>
-                <th scope="col">Country</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for company in companies %}
+    <div>
+        <h2 class="mb-4">Companies</h2>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
                 <tr>
-                    <td>{{ forloop.counter }}</th>
-                    <td><a href="{{company.id}}/">{{ company.name }}</a></td>
-                    <td>{{ company.address }}</td>
+                    <th scope="col">#</th>
+                    <th scope="col">Company name</th>
+                    <th scope="col">Country</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% comment %} {% for company in companies %}
-        <a href="{{company.id}}/">{{ company.name }} - {{ company.city }}<br></a>
-    {% endfor %} {% endcomment %}
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                    <tr>
+                        <td>{{ forloop.counter }}</th>
+                        <td><a href="{{company.id}}/">{{ company.name }}</a></td>
+                        <td>{{ company.address }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}
